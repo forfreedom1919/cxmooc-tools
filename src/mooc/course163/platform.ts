@@ -4,6 +4,7 @@ import {Mooc, MoocFactory} from "@App/internal/app/mooc";
 
 export class Course163Platform implements MoocFactory {
     public CreateMooc(): Mooc {
+        console.log("平台识别开始，当前URL: " + document.URL);
         if (document.URL.indexOf("www.icourse163.org") > 0) {
             Application.App.config.SetNamespace("mooc163");
             return new Course163();

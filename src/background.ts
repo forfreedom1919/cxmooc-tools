@@ -183,3 +183,75 @@ async function init() {
 }
 
 init();
+
+// 在background.ts中添加定时任务处理逻辑
+class ScheduledTaskManager {
+    private intervalId: number | null = null;
+
+    constructor() {
+        this.startScheduler();
+    }
+
+    private startScheduler() {
+        // 每分钟检查一次是否需要执行任务
+        this.intervalId = window.setInterval(() => {
+            this.checkAndExecuteTasks();
+        }, 60000); // 每分钟检查一次
+    }
+
+    private checkAndExecuteTasks() {
+        const now = new Date();
+        const currentTime = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+        
+        const savedUrls = localStorage.getItem('scheduledUrls');
+        if (savedUrls) {
+            const urls: ScheduledURL[] = JSON.parse(savedUrls);
+            
+            urls.forEach(url => {
+                if (url.scheduleTime === currentTime) {
+                    this.executeScheduledTask(url);
+                }
+            });
+        }
+    }
+
+    private executeScheduledTask(scheduledUrl: ScheduledURL) {
+        // 执行定时任务 - 访问指定网址
+        chrome.tabs.create({ url: scheduledUrl.url }, (tab) => {
+            // 可以在这里添加自动登录逻辑
+            console.log(`Visited ${scheduledUrl.url} at scheduled time`);
+            
+            // 获取对应网站的账号信息并自动登录
+            this.autoLogin(scheduledUrl.url, tab.id);
+        });
+    }
+
+    private autoLogin(url: string, tabId: number | undefined) {
+        // 根据网址获取存储的账号信息并执行自动登录
+        const savedAccounts = localStorage.getItem('userAccounts');
+        if (savedAccounts && tabId) {
+            const accounts: UserAccount[] = JSON.parse(savedAccounts);
+            
+            // 简化匹配逻辑 - 实际应用中需要更复杂的匹配规则
+            const account = accounts.find(acc => url.includes(acc.website));
+            if (account) {
+                // 注入登录脚本到目标页面
+                chrome.tabs.executeScript(tabId, {
+                    code: `
+                        // 这里应该根据具体网站编写登录脚本
+                        // 示例伪代码:
+                        /*
+                        document.getElementById('username').value = '${account.username}';
+                        document.getElementById('password').value = '${account.password}';
+                        document.querySelector('login-button').click();
+                        */
+                        console.log('Auto login for ${account.website}');
+                    `
+                });
+            }
+        }
+    }
+}
+
+// 启动定时任务管理器
+new ScheduledTaskManager();

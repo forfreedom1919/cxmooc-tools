@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>定时任务管理</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        h2 {
+            color: #555;
+            margin-top: 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        input, select, button {
+            padding: 8px 12px;
+            margin: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .delete-btn {
+            background-color: #f44336;
+        }
+        .delete-btn:hover {
+            background-color: #da190b;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: inline-block;
+            width: 120px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>定时任务管理系统</h1>
+        
+        <!-- URL Management Section -->
+        <div class="section">
+            <h2>网址管理</h2>
+            <div class="form-group">
+                <label for="url">网址:</label>
+                <input type="text" id="url" placeholder="https://example.com">
+            </div>
+            <div class="form-group">
+                <label for="schedule">定时时间:</label>
+                <input type="time" id="schedule">
+            </div>
+            <div class="form-group">
+                <label for="frequency">频率:</label>
+                <select id="frequency">
+                    <option value="daily">每天</option>
+                    <option value="weekly">每周</option>
+                    <option value="monthly">每月</option>
+                </select>
+            </div>
+            <button id="add-url">添加网址</button>
+            
+            <table id="urls-table">
+                <thead>
+                    <tr>
+                        <th>网址</th>
+                        <th>定时时间</th>
+                        <th>频率</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- URLs will be populated here -->
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Account Management Section -->
+        <div class="section">
+            <h2>账号管理</h2>
+            <div class="form-group">
+                <label for="website">网站:</label>
+                <input type="text" id="website" placeholder="网站标识">
+            </div>
+            <div class="form-group">
+                <label for="username">用户名:</label>
+                <input type="text" id="username" placeholder="用户名">
+            </div>
+            <div class="form-group">
+                <label for="password">密码:</label>
+                <input type="password" id="password" placeholder="密码">
+            </div>
+            <button id="add-account">添加账号</button>
+            
+            <table id="accounts-table">
+                <thead>
+                    <tr>
+                        <th>网站</th>
+                        <th>用户名</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Accounts will be populated here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

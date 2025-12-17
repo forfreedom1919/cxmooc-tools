@@ -6,7 +6,9 @@ module.exports = {
         mooc: home + '/mooc.ts',
         start: home + '/start.ts',
         background: home + '/background.ts',
-        popup: home + '/views/popup.ts'
+        popup: home + '/views/popup.ts',
+        // Add new management entry
+        management: home + '/views/management.ts'
     },
     output: {
         path: __dirname + '/build/cxmooc-tools/src',
@@ -22,6 +24,17 @@ module.exports = {
                 removeComments: true
             },
             chunks: ['popup']
+        }),
+        // Add management page plugin
+        new htmlWebpackPlugin({
+            filename: __dirname + '/build/cxmooc-tools/src/management.html',
+            template: home + '/views/management.html',
+            inject: 'body',
+            title: '管理页面',
+            minify: {
+                removeComments: true
+            },
+            chunks: ['management']
         })
     ],
     module: {
